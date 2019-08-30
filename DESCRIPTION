@@ -1,0 +1,9 @@
+Package: treePlotter
+Type: Package
+Title: Plots phylogenetic trees
+Version: 0.1
+Date: 2019-08-30
+Author: Luke J. Harmon
+Maintainer: Luke Harmon <lukeh@uidaho.edu>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
