@@ -19,6 +19,80 @@
 <script src="bootstrap/js/bootstrap.js"> </script>
 <script src="jqueryui/jquery-ui-1.10.3.custom.js"> </script>
 
+
+<script>
+$(document).ready(function() {
+
+  //globals
+  var dataframe;
+  var mapdata;
+  var joincode;
+  var countrycolumn;
+
+  //automatically upload CSV file on change.
+  $("#phyfile").on("change", function(){
+    //verify that a file is selected
+    if($("#phyfile")[0].files[0]){
+
+      //clear state
+      $("#successdiv").empty();
+      $("#errordiv").empty()
+      $("#plotbutton").attr("disabled", "disabled");
+
+      //call uploaddata function
+      var req = ocpu.call("uploadtree", {
+        phylofile : $("#phyfile")[0].files[0]
+      }, function(session){
+        dataframe = session;
+        datainfo();
+      }).fail(function(jqXHR){
+        errormsg(jqXHR.responseText);
+      }).always(function(){
+        $("#uploadform").get(0).reset();
+      });
+    }
+  });
+
+  function datainfo(){
+    return ocpu.rpc("datainfo", {mydata : dataframe}, function(jsondata){
+      $("#plotbutton").removeAttr("disabled");
+    }).fail(function(jqXHR){
+      errormsg(jqXHR.responseText);
+    });
+  }
+      
+
+  function successmsg(text){
+    $("#successdiv").empty().append('<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert">&times;</a>' + text + '</div>');
+  }
+
+  function errormsg(text){
+    $("#errordiv").empty().append('<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert">&times;</a>' + text + '</div>');
+  }
+
+  $("#plotbutton").on("click", function(){
+    if(joincode == $("#joinCode").val() && countrycolumn == $("#nameJoinColumn").val()){
+      //nothing has changed since last join
+      makeplot().always();
+    } else {
+      //first rejoin data, then make plot
+      joindata().done(makeplot);
+    }
+  });
+
+  $("#plotdiv").resizable();
+
+  $(document).ajaxStart(function() {
+    $(".progress").show();
+  });
+
+  $(document).ajaxStop(function() {
+    $(".progress").hide();
+  });
+
+
+});
+</script>
 </head>
 
 <body>
@@ -36,8 +110,8 @@
             <legend>(1) Import Data</legend>
 
               <div class="form-group">
-                 <input type="file" id="csvfile">
-                <p class="help-block">Upload a CSV file. <a href="../R/countryExData/csv">(example data)</a></p>
+                 <input type="file" id="phyfile">
+                <p class="help-block">Upload a newick tree file (*.phy). <a href="../R/countryExData/csv">(example data)</a></p>
               </div>
 
           </fieldset>
