@@ -7,3 +7,5 @@ Author: Luke J. Harmon
 Maintainer: Luke Harmon <lukeh@uidaho.edu>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
+Imports:
+    ape
