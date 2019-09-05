@@ -27,5 +27,5 @@ uploadtree <- function(phylofile, ...){
 
 
   #return dataset
-  return(mytree)
+  return(mytree);
 }
