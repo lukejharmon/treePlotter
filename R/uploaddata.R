@@ -22,7 +22,7 @@ uploadtree <- function(phylofile, ...){
     stop('Uploaded data needs to be newick file with extension *.phy.);
   }
 
-  #read csv data
+  #read tree data
   mytree <- read.tree(phylofile, ...);
 
 
