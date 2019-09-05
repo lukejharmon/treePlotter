@@ -53,14 +53,6 @@ $(document).ready(function() {
     }
   });
 
-  function datainfo(){
-    return ocpu.rpc("datainfo", {mydata : dataframe}, function(jsondata){
-      $("#plotbutton").removeAttr("disabled");
-    }).fail(function(jqXHR){
-      errormsg(jqXHR.responseText);
-    });
-  }
-      
 
   function successmsg(text){
     $("#successdiv").empty().append('<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert">&times;</a>' + text + '</div>');
