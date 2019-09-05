@@ -19,7 +19,7 @@ uploaddata <- function(csvfile, ...){
 
 uploadtree <- function(phylofile, ...){
   if(substring(tolower(phylofile), nchar(csvfile)-3) != ".phy"){
-    stop('Uploaded data needs to be newick file with extension *.phy.);
+    stop('Uploaded data needs to be newick file with extension *.phy.');
   }
 
   #read tree data
